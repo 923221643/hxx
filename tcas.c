@@ -55,12 +55,12 @@ void initialize()
 
 int ALIM ()
 {
- return Positive_RA_Alt_Thresh[Alt_Layer_Value];
+ return Positive_RA_Alt_Thresh[0];
 }
 
 int Inhibit_Biased_Climb ()
 {
-    return (Climb_Inhibit ? Up_Separation : Up_Separation + NOZCROSS);
+    return (Climb_Inhibit ? Up_Separation + NOZCROSS : Up_Separation);
 }
 
 bool Non_Crossing_Biased_Climb()
