@@ -1,5 +1,5 @@
 
-/*  -*- Last-Edit:  Tue Apr 20 11:22:37 1993 by Michael Greenberg; -*- */
+/*  -*- Last-Edit:  Fri Jan 29 11:13:27 1993 by Tarak S. Goradia; -*- */
 /* $Log: tcas.c,v $
  * Revision 1.2  1993/03/12  19:29:50  foster
  * Correct logic bug which didn't allow output of 2 - hf
@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#define OLEV       600		/* in feets/minute */
+#define OLEV       600+100		/* in feets/minute */
 #define MAXALTDIFF 600		/* max altitude difference in feet */
 #define MINSEP     300          /* min separation in feet */
 #define NOZCROSS   100		/* in feet */
@@ -115,7 +115,7 @@ int alt_sep_test()
     bool need_upward_RA, need_downward_RA;
     int alt_sep;
 
-    enabled = High_Confidence || (Own_Tracked_Alt_Rate <= OLEV) && (Cur_Vertical_Sep > MAXALTDIFF);
+    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV) && (Cur_Vertical_Sep > MAXALTDIFF);
     tcas_equipped = Other_Capability == TCAS_TA;
     intent_not_known = Two_of_Three_Reports_Valid && Other_RAC == NO_INTENT;
     
