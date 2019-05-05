@@ -48,7 +48,7 @@ int Climb_Inhibit;		/* true/false */
 void initialize()
 {
     Positive_RA_Alt_Thresh[0] = 400;
-    Positive_RA_Alt_Thresh[1] = 550; /* constant mutation */
+    Positive_RA_Alt_Thresh[1] = 500;
     Positive_RA_Alt_Thresh[2] = 640;
     Positive_RA_Alt_Thresh[3] = 740;
 }
@@ -101,12 +101,14 @@ bool Non_Crossing_Biased_Descend()
 
 bool Own_Below_Threat()
 {
-    return (Own_Tracked_Alt < Other_Tracked_Alt);
+    /* NOTE JMW replaced LESS-THAN with LESS-THAN-EQUAL. */
+    return (Own_Tracked_Alt <= Other_Tracked_Alt);
 }
 
 bool Own_Above_Threat()
 {
-    return (Other_Tracked_Alt < Own_Tracked_Alt);
+    /* NOTE JMW replaced LESS-THAN with LESS-THAN-EQUAL. */
+    return (Other_Tracked_Alt <= Own_Tracked_Alt);
 }
 
 int alt_sep_test()
