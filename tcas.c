@@ -49,7 +49,7 @@ void initialize()
 {
     Positive_RA_Alt_Thresh[0] = 400;
     Positive_RA_Alt_Thresh[1] = 500;
-    Positive_RA_Alt_Thresh[2] = 640+50;
+    Positive_RA_Alt_Thresh[2] = 640;
     Positive_RA_Alt_Thresh[3] = 740;
 }
 
@@ -69,7 +69,7 @@ bool Non_Crossing_Biased_Climb()
     int upward_crossing_situation;
     bool result;
 
-    upward_preferred = Inhibit_Biased_Climb() > Down_Separation;
+    upward_preferred = Inhibit_Biased_Climb() >= Down_Separation;
     if (upward_preferred)
     {
 	result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
