@@ -60,7 +60,7 @@ int ALIM ()
 
 int Inhibit_Biased_Climb ()
 {
-    return ((Climb_Inhibit == 0) ? Up_Separation + NOZCROSS : Up_Separation);
+    return (Up_Separation);
 }
 
 bool Non_Crossing_Biased_Climb()
