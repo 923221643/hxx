@@ -47,10 +47,10 @@ int Climb_Inhibit;		/* true/false */
 
 void initialize()
 {
-    Positive_RA_Alt_Thresh[1] = 400;
-    Positive_RA_Alt_Thresh[2] = 500;
-    Positive_RA_Alt_Thresh[3] = 640;
-    Positive_RA_Alt_Thresh[4] = 740;
+    Positive_RA_Alt_Thresh[0] = 400;
+    Positive_RA_Alt_Thresh[1] = 500;
+    Positive_RA_Alt_Thresh[2] = 640;
+    Positive_RA_Alt_Thresh[3] = 740;
 }
 
 int ALIM ()
@@ -121,7 +121,7 @@ int alt_sep_test()
     
     alt_sep = UNRESOLVED;
     
-    if (enabled && ((tcas_equipped && intent_not_known) || !tcas_equipped))
+    if (enabled && tcas_equipped && intent_not_known || !tcas_equipped)
     {
 	need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
 	need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
