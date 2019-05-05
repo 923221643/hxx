@@ -101,13 +101,15 @@ bool Non_Crossing_Biased_Descend()
 
 bool Own_Below_Threat()
 {
-    /* NOTE JMW replaced LESS-THAN with LESS-THAN-EQUAL. */
+ /* NOTE JMW added equality to the condition. */
+
     return (Own_Tracked_Alt <= Other_Tracked_Alt);
 }
 
 bool Own_Above_Threat()
 {
-    /* NOTE JMW replaced LESS-THAN with LESS-THAN-EQUAL. */
+ /* NOTE JMW added equality to the condition. */
+
     return (Other_Tracked_Alt <= Own_Tracked_Alt);
 }
 
@@ -127,12 +129,14 @@ int alt_sep_test()
     {
 	need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
 	need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
-	if (need_upward_RA && need_downward_RA)
+
+     /* NOTE JMW removed exclusive-or condition from upward and downward
+             computations. */
+
+	if (need_upward_RA)
         /* unreachable: requires Own_Below_Threat and Own_Above_Threat
            to both be true - that requires Own_Tracked_Alt < Other_Tracked_Alt
            and Other_Tracked_Alt < Own_Tracked_Alt, which isn't possible */
-	    alt_sep = UNRESOLVED;
-	else if (need_upward_RA)
 	    alt_sep = UPWARD_RA;
 	else if (need_downward_RA)
 	    alt_sep = DOWNWARD_RA;
