@@ -7,8 +7,8 @@
 
 #include <stdio.h>
 
-#define OLEV       600+100		/* in feets/minute */
-#define MAXALTDIFF 600		/* max altitude difference in feet */
+#define OLEV       600		/* in feets/minute */
+#define MAXALTDIFF 600+50		/* max altitude difference in feet */
 #define MINSEP     300          /* min separation in feet */
 #define NOZCROSS   100		/* in feet */
 				/* variables */
