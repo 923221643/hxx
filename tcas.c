@@ -60,7 +60,7 @@ int ALIM ()
 
 int Inhibit_Biased_Climb ()
 {
-    return (Climb_Inhibit ? Up_Separation + NOZCROSS : Up_Separation);
+    return (Climb_Inhibit ? Up_Separation : Up_Separation + NOZCROSS);
 }
 
 bool Non_Crossing_Biased_Climb()
@@ -121,7 +121,7 @@ int alt_sep_test()
     
     alt_sep = UNRESOLVED;
     
-    if (enabled && tcas_equipped && intent_not_known || !tcas_equipped)
+    if (enabled && ((tcas_equipped && intent_not_known) || !tcas_equipped))
     {
 	need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
 	need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
