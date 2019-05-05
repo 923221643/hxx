@@ -101,7 +101,7 @@ bool Non_Crossing_Biased_Descend()
 
 bool Own_Below_Threat()
 {
-    return (Own_Tracked_Alt < Other_Tracked_Alt);
+    return (Own_Tracked_Alt <= Other_Tracked_Alt); /* operator mutation */
 }
 
 bool Own_Above_Threat()
@@ -115,7 +115,7 @@ int alt_sep_test()
     bool need_upward_RA, need_downward_RA;
     int alt_sep;
 
-    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV); /* && (Cur_Vertical_Sep > MAXALTDIFF); missing code */
+    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV) && (Cur_Vertical_Sep > MAXALTDIFF);
     tcas_equipped = Other_Capability == TCAS_TA;
     intent_not_known = Two_of_Three_Reports_Valid && Other_RAC == NO_INTENT;
     
