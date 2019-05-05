@@ -47,10 +47,10 @@ int Climb_Inhibit;		/* true/false */
 
 void initialize()
 {
-    Positive_RA_Alt_Thresh[0] = 400;
-    Positive_RA_Alt_Thresh[1] = 500;
-    Positive_RA_Alt_Thresh[2] = 640;
-    Positive_RA_Alt_Thresh[3] = 740;
+    Positive_RA_Alt_Thresh[1] = 400;
+    Positive_RA_Alt_Thresh[2] = 500;
+    Positive_RA_Alt_Thresh[3] = 640;
+    Positive_RA_Alt_Thresh[4] = 740;
 }
 
 int ALIM ()
@@ -73,12 +73,10 @@ bool Non_Crossing_Biased_Climb()
     if (upward_preferred)
     {
 	result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
-	result = result && (Own_Tracked_Alt <= Other_Tracked_Alt);
     }
     else
     {	
 	result = Own_Above_Threat() && (Cur_Vertical_Sep >= MINSEP) && (Up_Separation >= ALIM());
-	result = result && (Own_Tracked_Alt < Other_Tracked_Alt);
     }
     return result;
 }
@@ -125,7 +123,7 @@ int alt_sep_test()
     
     if (enabled && ((tcas_equipped && intent_not_known) || !tcas_equipped))
     {
-	need_upward_RA = Non_Crossing_Biased_Climb();
+	need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
 	need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
 	if (need_upward_RA && need_downward_RA)
         /* unreachable: requires Own_Below_Threat and Own_Above_Threat
