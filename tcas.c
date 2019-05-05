@@ -8,8 +8,8 @@
 #include <stdio.h>
 
 #define OLEV       600		/* in feets/minute */
-#define MAXALTDIFF 600+50		/* max altitude difference in feet */
-#define MINSEP     300          /* min separation in feet */
+#define MAXALTDIFF 600		/* max altitude difference in feet */
+#define MINSEP     300+350          /* min separation in feet */
 #define NOZCROSS   100		/* in feet */
 				/* variables */
 
@@ -115,7 +115,7 @@ int alt_sep_test()
     bool need_upward_RA, need_downward_RA;
     int alt_sep;
 
-    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV) && (Cur_Vertical_Sep > MAXALTDIFF);
+    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV); 
     tcas_equipped = Other_Capability == TCAS_TA;
     intent_not_known = Two_of_Three_Reports_Valid && Other_RAC == NO_INTENT;
     
