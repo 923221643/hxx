@@ -69,7 +69,7 @@ bool Non_Crossing_Biased_Climb()
     int upward_crossing_situation;
     bool result;
 
-    upward_preferred = (Up_Separation + NOZCROSS) > Down_Separation;
+    upward_preferred = Up_Separation > Down_Separation;
     if (upward_preferred)
     {
 	result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
