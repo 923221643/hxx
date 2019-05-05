@@ -24,7 +24,7 @@ int Own_Tracked_Alt_Rate;
 int Other_Tracked_Alt;
 
 int Alt_Layer_Value;		/* 0, 1, 2, 3 */
-int Positive_RA_Alt_Thresh[4];
+int Positive_RA_Alt_Thresh[3];
 
 int Up_Separation;
 int Down_Separation;
@@ -55,7 +55,7 @@ void initialize()
 
 int ALIM ()
 {
- return Positive_RA_Alt_Thresh[0];
+ return Positive_RA_Alt_Thresh[Alt_Layer_Value];
 }
 
 int Inhibit_Biased_Climb ()
