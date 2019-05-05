@@ -1,5 +1,5 @@
 
-/*  -*- Last-Edit:  Wed Apr  7 14:06:41 1993 by Tarak S. Goradia; -*- */
+/*  -*- Last-Edit:  Wed Apr  7 17:44:49 1993 by Tarak S. Goradia; -*- */
 /* $Log: tcas.c,v $
  * Revision 1.2  1993/03/12  19:29:50  foster
  * Correct logic bug which didn't allow output of 2 - hf
@@ -72,7 +72,7 @@ bool Non_Crossing_Biased_Climb()
     upward_preferred = Inhibit_Biased_Climb() > Down_Separation;
     if (upward_preferred)
     {
-	result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
+	result = ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
     }
     else
     {	
@@ -94,7 +94,7 @@ bool Non_Crossing_Biased_Descend()
     }
     else
     {
-	result = !(Own_Above_Threat()) || ((Own_Above_Threat()) && (Up_Separation > ALIM()));
+	result = !(Own_Above_Threat()) || ((Own_Above_Threat()) && (Up_Separation >= ALIM()));
     }
     return result;
 }
@@ -123,7 +123,7 @@ int alt_sep_test()
     
     if (enabled && ((tcas_equipped && intent_not_known) || !tcas_equipped))
     {
-	need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
+	need_upward_RA = Non_Crossing_Biased_Climb();
 	need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
 	if (need_upward_RA && need_downward_RA)
         /* unreachable: requires Own_Below_Threat and Own_Above_Threat
