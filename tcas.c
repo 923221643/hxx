@@ -9,7 +9,7 @@
 
 #define OLEV       600		/* in feets/minute */
 #define MAXALTDIFF 600		/* max altitude difference in feet */
-#define MINSEP     300+350          /* min separation in feet */
+#define MINSEP     300          /* min separation in feet */
 #define NOZCROSS   100		/* in feet */
 				/* variables */
 
@@ -47,7 +47,7 @@ int Climb_Inhibit;		/* true/false */
 
 void initialize()
 {
-    Positive_RA_Alt_Thresh[0] = 400;
+    Positive_RA_Alt_Thresh[0] = 400+1;
     Positive_RA_Alt_Thresh[1] = 500;
     Positive_RA_Alt_Thresh[2] = 640;
     Positive_RA_Alt_Thresh[3] = 740;
@@ -115,7 +115,7 @@ int alt_sep_test()
     bool need_upward_RA, need_downward_RA;
     int alt_sep;
 
-    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV); 
+    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV) && (Cur_Vertical_Sep > MAXALTDIFF);
     tcas_equipped = Other_Capability == TCAS_TA;
     intent_not_known = Two_of_Three_Reports_Valid && Other_RAC == NO_INTENT;
     
