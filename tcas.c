@@ -60,7 +60,7 @@ int ALIM ()
 
 int Inhibit_Biased_Climb ()
 {
-    return (Up_Separation + NOZCROSS);
+    return (Climb_Inhibit ? Up_Separation + NOZCROSS : Up_Separation);
 }
 
 bool Non_Crossing_Biased_Climb()
@@ -73,10 +73,12 @@ bool Non_Crossing_Biased_Climb()
     if (upward_preferred)
     {
 	result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
+	result = result && (Own_Tracked_Alt <= Other_Tracked_Alt);
     }
     else
     {	
 	result = Own_Above_Threat() && (Cur_Vertical_Sep >= MINSEP) && (Up_Separation >= ALIM());
+	result = result && (Own_Tracked_Alt < Other_Tracked_Alt);
     }
     return result;
 }
@@ -123,7 +125,7 @@ int alt_sep_test()
     
     if (enabled && ((tcas_equipped && intent_not_known) || !tcas_equipped))
     {
-	need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
+	need_upward_RA = Non_Crossing_Biased_Climb();
 	need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
 	if (need_upward_RA && need_downward_RA)
         /* unreachable: requires Own_Below_Threat and Own_Above_Threat
