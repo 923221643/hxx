@@ -1,5 +1,5 @@
 
-/*  -*- Last-Edit:  Fri Jan 29 11:13:27 1993 by Tarak S. Goradia; -*- */
+/*  -*- Last-Edit:  Tue Apr 20 11:22:37 1993 by Michael Greenberg; -*- */
 /* $Log: tcas.c,v $
  * Revision 1.2  1993/03/12  19:29:50  foster
  * Correct logic bug which didn't allow output of 2 - hf
@@ -101,16 +101,12 @@ bool Non_Crossing_Biased_Descend()
 
 bool Own_Below_Threat()
 {
- /* NOTE JMW added equality to the condition. */
-
-    return (Own_Tracked_Alt <= Other_Tracked_Alt);
+    return (Own_Tracked_Alt < Other_Tracked_Alt);
 }
 
 bool Own_Above_Threat()
 {
- /* NOTE JMW added equality to the condition. */
-
-    return (Other_Tracked_Alt <= Own_Tracked_Alt);
+    return (Other_Tracked_Alt < Own_Tracked_Alt);
 }
 
 int alt_sep_test()
@@ -119,7 +115,7 @@ int alt_sep_test()
     bool need_upward_RA, need_downward_RA;
     int alt_sep;
 
-    enabled = High_Confidence && (Own_Tracked_Alt_Rate <= OLEV) && (Cur_Vertical_Sep > MAXALTDIFF);
+    enabled = High_Confidence || (Own_Tracked_Alt_Rate <= OLEV) && (Cur_Vertical_Sep > MAXALTDIFF);
     tcas_equipped = Other_Capability == TCAS_TA;
     intent_not_known = Two_of_Three_Reports_Valid && Other_RAC == NO_INTENT;
     
@@ -129,14 +125,12 @@ int alt_sep_test()
     {
 	need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
 	need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
-
-     /* NOTE JMW removed exclusive-or condition from upward and downward
-             computations. */
-
-	if (need_upward_RA)
+	if (need_upward_RA && need_downward_RA)
         /* unreachable: requires Own_Below_Threat and Own_Above_Threat
            to both be true - that requires Own_Tracked_Alt < Other_Tracked_Alt
            and Other_Tracked_Alt < Own_Tracked_Alt, which isn't possible */
+	    alt_sep = UNRESOLVED;
+	else if (need_upward_RA)
 	    alt_sep = UPWARD_RA;
 	else if (need_downward_RA)
 	    alt_sep = DOWNWARD_RA;
