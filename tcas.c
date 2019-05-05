@@ -1,5 +1,5 @@
 
-/*  -*- Last-Edit:  Fri Jan 29 11:13:27 1993 by Tarak S. Goradia; -*- */
+/*  -*- Last-Edit:  Wed Apr  7 14:06:41 1993 by Tarak S. Goradia; -*- */
 /* $Log: tcas.c,v $
  * Revision 1.2  1993/03/12  19:29:50  foster
  * Correct logic bug which didn't allow output of 2 - hf
@@ -24,7 +24,7 @@ int Own_Tracked_Alt_Rate;
 int Other_Tracked_Alt;
 
 int Alt_Layer_Value;		/* 0, 1, 2, 3 */
-int Positive_RA_Alt_Thresh[3];
+int Positive_RA_Alt_Thresh[4];
 
 int Up_Separation;
 int Down_Separation;
@@ -94,7 +94,7 @@ bool Non_Crossing_Biased_Descend()
     }
     else
     {
-	result = !(Own_Above_Threat()) || ((Own_Above_Threat()) && (Up_Separation >= ALIM()));
+	result = !(Own_Above_Threat()) || ((Own_Above_Threat()) && (Up_Separation > ALIM()));
     }
     return result;
 }
