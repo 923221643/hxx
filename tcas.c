@@ -60,7 +60,7 @@ int ALIM ()
 
 int Inhibit_Biased_Climb ()
 {
-    return (Climb_Inhibit ? Up_Separation + NOZCROSS : Up_Separation);
+    return (Climb_Inhibit ? Up_Separation + MINSEP /* operand mutation NOZCROSS */ : Up_Separation);
 }
 
 bool Non_Crossing_Biased_Climb()
@@ -72,7 +72,7 @@ bool Non_Crossing_Biased_Climb()
     upward_preferred = Inhibit_Biased_Climb() > Down_Separation;
     if (upward_preferred)
     {
-	result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation > ALIM()))); /* opertor mutation */
+	result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
     }
     else
     {	
